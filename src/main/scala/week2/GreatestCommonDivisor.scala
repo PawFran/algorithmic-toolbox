@@ -19,8 +19,6 @@ object GreatestCommonDivisor extends  App {
     val first = sorted.last
     val second = sorted.head
 
-    println(s"first: $first, second: $second")
-
     if (second == 0) first
     else apply(second, first % second)
   }
