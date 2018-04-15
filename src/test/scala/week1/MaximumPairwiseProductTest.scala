@@ -7,11 +7,11 @@ import org.scalatest.FunSuite
 class MaximumPairwiseProductTest extends FunSuite {
 
   test("small input") {
-    MaximumPairwiseProduct.apply(Array(1, 2, 3).map(BigInt(_))) == 6
+    assert(MaximumPairwiseProduct.apply(Array(1, 2, 3).map(BigInt(_))) == 6)
   }
 
   test("slightly longer list") {
-    MaximumPairwiseProduct.apply(Array(7, 5, 14, 2, 8, 8, 10, 1, 2, 3).map(BigInt(_))) == 140
+    assert(MaximumPairwiseProduct.apply(Array(7, 5, 14, 2, 8, 8, 10, 1, 2, 3).map(BigInt(_))) == 140)
   }
 
 }
