@@ -12,9 +12,9 @@ object LeastCommonMultiple extends App {
   private val scanner = new Scanner(System.in)
   private val numbers = scanner.nextLine().split(" ").map(_.toInt)
 
-  println(apply(numbers.head, numbers.last))
+  println(compute(numbers.head, numbers.last))
 
-  def apply(a: Int, b: Int): BigInt = {
+  def compute(a: Int, b: Int): BigInt = {
     (BigInt(a) * BigInt(b)) / gcd(a, b)
   }
 
@@ -22,8 +22,6 @@ object LeastCommonMultiple extends App {
     val sorted = List(a, b).sorted
     val first = sorted.last
     val second = sorted.head
-
-    println(s"first: $first, second: $second")
 
     if (second == 0) first
     else gcd(second, first % second)

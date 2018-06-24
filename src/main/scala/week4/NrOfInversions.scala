@@ -15,16 +15,16 @@ object NrOfInversions extends App {
   private val inputSize = scanner.nextLine().toInt
   private val numbers = scanner.nextLine().split(" ").map(_.toInt)
 
-  println(apply(numbers).nrOfInversions)
+  println(compute(numbers).nrOfInversions)
 
-  def apply(numbers: Array[Int], nrOfInversions: Int = 0): Result = {
+  def compute(numbers: Array[Int], nrOfInversions: Int = 0): Result = {
     if (numbers.length == 1) Result(Array(numbers.head), nrOfInversions)
     else {
       val middleIndex = numbers.length / 2
       val firstHalf = numbers.splitAt(middleIndex)._1
       val secondHalf = numbers.splitAt(middleIndex)._2
-      val a = apply(firstHalf, nrOfInversions)
-      val b = apply(secondHalf, nrOfInversions)
+      val a = compute(firstHalf, nrOfInversions)
+      val b = compute(secondHalf, nrOfInversions)
       helper(a.arr, b.arr, Result(Array.empty, a.nrOfInversions + b.nrOfInversions))
     }
   }

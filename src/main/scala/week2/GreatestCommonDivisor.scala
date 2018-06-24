@@ -12,14 +12,14 @@ object GreatestCommonDivisor extends  App {
   private val scanner = new Scanner(System.in)
   private val numbers = scanner.nextLine().split(" ").map(_.toInt)
 
-  println(apply(numbers.head, numbers.last))
+  println(compute(numbers.head, numbers.last))
 
-  def apply(a: Int, b: Int): Int = {
+  def compute(a: Int, b: Int): Int = {
     val sorted = List(a, b).sorted
     val first = sorted.last
     val second = sorted.head
 
     if (second == 0) first
-    else apply(second, first % second)
+    else compute(second, first % second)
   }
 }

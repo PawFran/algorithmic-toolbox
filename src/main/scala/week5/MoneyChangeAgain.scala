@@ -11,9 +11,9 @@ object MoneyChangeAgain extends App {
   private val scanner = new Scanner(System.in)
   private val money = scanner.nextLine().toInt
 
-  println(apply(money))
+  println(compute(money))
 
-  def apply(number: Int): Int = {
+  def compute(number: Int): Int = {
     val coins = Array.fill(number + 1) {0}
 
     (1 to number).foreach { idx =>

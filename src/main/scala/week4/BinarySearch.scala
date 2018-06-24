@@ -17,16 +17,16 @@ object BinarySearch extends App {
   private val allNumbers = scanner.nextLine().split(" ").map(_.toInt)
   private val toBeFound = scanner.nextLine().split(" ").map(_.toInt).tail
 
-  toBeFound.foreach(number => print(apply(allNumbers, number)) + " ")
+  toBeFound.foreach(number => print(compute(allNumbers, number)) + " ")
 
-  def apply(numbersAsc: Array[Int], toBeFound: Int): Int = {
+  def compute(numbersAsc: Array[Int], toBeFound: Int): Int = {
     if (numbersAsc.isEmpty) return -1
 
     val middleIndex = numbersAsc.length / 2
     val middleElement = numbersAsc(middleIndex)
 
     if (middleElement == toBeFound) middleIndex
-    else if (toBeFound > middleElement) apply(numbersAsc.splitAt(middleIndex)._2.tail, toBeFound)
-    else apply(numbersAsc.splitAt(middleIndex)._1, toBeFound)
+    else if (toBeFound > middleElement) compute(numbersAsc.splitAt(middleIndex)._2.tail, toBeFound)
+    else compute(numbersAsc.splitAt(middleIndex)._1, toBeFound)
   }
 }

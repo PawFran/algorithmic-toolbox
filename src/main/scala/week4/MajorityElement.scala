@@ -16,16 +16,16 @@ object MajorityElement extends App {
 
   private val numbers = scanner.nextLine().split(" ").map(_.toInt)
 
-  println(if (apply(numbers) == -1) 0 else 1)
+  println(if (compute(numbers) == -1) 0 else 1)
 
-  def apply(arr: Array[Int]): Int = {
+  def compute(arr: Array[Int]): Int = {
     if (arr.length == 1) return arr.head
 
     val middleIndex = arr.length / 2
     val (firstHalf, secondHalf) = arr.splitAt(middleIndex)
 
-    val first = apply(firstHalf)
-    val second = apply(secondHalf)
+    val first = compute(firstHalf)
+    val second = compute(secondHalf)
 
     if (secondHalf.length > firstHalf.length) second // second half will sometimes be larger
     else if (firstHalf contains second) first

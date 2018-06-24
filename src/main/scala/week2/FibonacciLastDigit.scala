@@ -10,9 +10,9 @@ object FibonacciLastDigit extends App {
   private val scanner = new java.util.Scanner(System.in)
   private val number = scanner.nextLine().toInt
 
-  println(apply(number))
+  println(compute(number))
 
-  def apply(number: Int): Int = {
+  def compute(number: Int): Int = {
     number match {
       case 0 => 0
       case 1 => 1

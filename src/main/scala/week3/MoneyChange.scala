@@ -13,9 +13,9 @@ object MoneyChange extends App {
   private val scanner = new Scanner(System.in)
   private val number = scanner.nextLine().toInt
 
-  println(apply(number))
+  println(compute(number))
 
-  def apply(m: Int, current: Int = 0): Int = {
+  def compute(m: Int, current: Int = 0): Int = {
     val tens = m / 10
     val fives = (m - 10 * tens) / 5
     val ones = m - 10 * tens - 5 * fives
