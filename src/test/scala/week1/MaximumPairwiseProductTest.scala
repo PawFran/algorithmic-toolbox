@@ -18,7 +18,7 @@ class MaximumPairwiseProductTest extends FunSuite {
 
 object MaximumPairwiseProductSpecification extends Properties("MaximumPairwiseProduct") {
 
-  property("at least two integers, all non negative") = forAll { (a: Array[BigInt]) =>
+  property("at least two integers, all non negative") = forAll { a: Array[BigInt] =>
     val atLeastTwoNonNegative =
       if (a.length < 2) Array(BigInt(0), BigInt(0))
       else a.map(_ max 0).sorted
