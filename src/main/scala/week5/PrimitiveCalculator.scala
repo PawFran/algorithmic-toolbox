@@ -1,6 +1,7 @@
 package week5
 
 import java.util.Scanner
+import scala.collection.mutable
 
 /**
   * Task. Given an integer n, compute the minimum number of operations needed to obtain the number n
@@ -20,34 +21,47 @@ object PrimitiveCalculator extends App {
   println(arrayOfIntermediaryNumbers.length - 1)
   println(arrayOfIntermediaryNumbers)
 
-  def compute(number: Int): Array[Int] = {
-    val intermediaryNumbers = Array.fill(number + 1) {0}
-    val opsNr = Array.fill(number + 1) {0}
+  def compute(number: Int): List[Int] = {
+    val opsNr = Array.fill(number) {0}
+    val intermediaryNumbers = mutable.Map(1 -> mutable.ListBuffer(1))
 
-    def indexWithMinValue(arr: Array[Int]) = arr.zipWithIndex.min._2
-
-    def updateArrays(i: Int, idx: Int): Unit = {
-      intermediaryNumbers(i) = idx
-      opsNr(i) = opsNr(idx) + 1
-    }
-
-    (1 to number).foreach { i =>
+    (2 to number).foreach { i =>
       (i % 3 == 0, i % 2 == 0) match {
         case (true, true) =>
-          val idx = indexWithMinValue(Array(opsNr( i % 3), opsNr(i % 2), opsNr(i - 1)))
-          updateArrays(i, idx)
-        case (true, false) =>
-          val idx = indexWithMinValue(Array(opsNr(i % 3), opsNr(i - 1)))
-          updateArrays(i, idx)
+          val previousNr = opsNr.zipWithIndex
+            .filter(el => el._2 == i / 3 - 1 || el._2 == i / 2 - 1 || el._2 == i - 1 - 1)
+            .minBy(_._1)
+            ._2 + 1
+
+          opsNr(i - 1) = opsNr(previousNr - 1) + 1
+          intermediaryNumbers(i) = intermediaryNumbers(previousNr) :+ i
         case (false, true) =>
-          val idx = indexWithMinValue(Array(opsNr(i % 2), opsNr(i - 1)))
-          updateArrays(i, idx)
+          val previousNr = opsNr.zipWithIndex
+            .filter(el => el._2 == i / 2 - 1 || el._2 == i - 1 - 1)
+            .minBy(_._1)
+            ._2 + 1
+
+          opsNr(i - 1) = opsNr(previousNr - 1) + 1
+          intermediaryNumbers(i) = intermediaryNumbers(previousNr) :+ i
+        case (true, false) =>
+          val previousNr = opsNr.zipWithIndex
+            .filter(el => el._2 == i / 3 - 1 || el._2 == i - 1 - 1)
+            .minBy(_._1)
+            ._2 + 1
+
+          opsNr(i - 1) = opsNr(previousNr - 1) + 1
+          intermediaryNumbers(i) = intermediaryNumbers(previousNr) :+ i
         case (false, false) =>
-          val idx = opsNr(i - 1)
-          updateArrays(i, idx)
+          val previousNr = opsNr.zipWithIndex
+            .filter(el => el._2 == i - 1 - 1)
+            .minBy(_._1)
+            ._2 + 1
+
+          opsNr(i - 1) = opsNr(previousNr - 1) + 1
+          intermediaryNumbers(i) = intermediaryNumbers(previousNr) :+ i
       }
     }
 
-    intermediaryNumbers
+    intermediaryNumbers(number).toList
   }
 }
