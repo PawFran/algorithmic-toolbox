@@ -21,15 +21,15 @@ object NrOfInversions extends App {
     if (numbers.length == 1) Result(Array(numbers.head), nrOfInversions)
     else {
       val middleIndex = numbers.length / 2
-      val firstHalf = numbers.splitAt(middleIndex)._1
-      val secondHalf = numbers.splitAt(middleIndex)._2
+      val (firstHalf, secondHalf) = numbers.splitAt(middleIndex)
       val a = compute(firstHalf, nrOfInversions)
       val b = compute(secondHalf, nrOfInversions)
       helper(a.arr, b.arr, Result(Array.empty, a.nrOfInversions + b.nrOfInversions))
     }
   }
 
-  def helper(a: Array[Int], b: Array[Int], summary: Result): Result = {
+  @scala.annotation.tailrec
+  private def helper(a: Array[Int], b: Array[Int], summary: Result): Result = {
     if (a.isEmpty && b.isEmpty) summary
     else if (a.isEmpty) Result(summary.arr ++ b, summary.nrOfInversions)
     else if (b.isEmpty) Result(summary.arr ++ a, summary.nrOfInversions + a.length)
