@@ -18,18 +18,34 @@ object MajorityElement extends App {
 
   println(if (compute(numbers) == -1) 0 else 1)
 
-  def compute(arr: Array[Int]): Int = {
-    if (arr.length == 1) return arr.head
+  def compute(seq: Seq[Int]): Int = {
+    if (seq.size == 1) {
+      seq.head
+    } else {
+      val middleIndex = seq.size / 2
+      val (leftSeq, rightSeq) = seq.splitAt(middleIndex)
 
-    val middleIndex = arr.length / 2
-    val (firstHalf, secondHalf) = arr.splitAt(middleIndex)
+      val leftMajority = compute(leftSeq)
+      val rightMajority = compute(rightSeq)
 
-    val first = compute(firstHalf)
-    val second = compute(secondHalf)
-
-    if (secondHalf.length > firstHalf.length) second // second half will sometimes be larger
-    else if (firstHalf contains second) first
-    else if (secondHalf contains first) second
-    else -1
+      mergeResults(seq, leftMajority, rightMajority)
+    }
   }
+
+  private def mergeResults(seq: Seq[Int], leftMajority: Int, rightMajority: Int) = {
+    if (leftMajority == rightMajority) {
+      leftMajority
+    } else {
+      val threshold = seq.size / 2 + 1
+      val leftCandidateOverallCount = seq.count(_ == leftMajority)
+      val rightCandidateOverallCount = seq.count(_ == rightMajority)
+
+      if (leftCandidateOverallCount >= threshold)
+        leftMajority
+      else if (rightCandidateOverallCount >= threshold)
+        rightMajority
+      else -1
+    }
+  }
+
 }
